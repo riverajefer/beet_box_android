@@ -25,11 +25,10 @@ class MainActivity : AppCompatActivity() {
 
     object DbConstants {
         const val SONIDOS = "sonidos"
-        const val CLAP = "clap"
-        const val CYMBAL = "cymbal"
-        const val KICK = "kick"
-        const val OPEN = "open"
-        const val SNARE = "snare"
+        const val ARROZ = "arroz"
+        const val CREMA = "crema"
+        const val GASEOSA = "gaseosa"
+        const val PAPEL = "papel"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,24 +36,23 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         textView = findViewById(R.id.text_view_id) as TextView
 
-        getFirebaseSoundClap()
-        getFirebaseSoundCymbal()
-        getFirebaseSoundKick()
-        getFirebaseSoundOpen()
-        getFirebaseSoundSnare()
+        getFirebaseSoundArroz()
+        getFirebaseSoundCrema()
+        getFirebaseSoundGaseosa()
+        getFirebaseSoundPapel()
     }
 
-    fun getFirebaseSoundClap() {
-        val refSonidoClap =  refSonidos.child(DbConstants.CLAP)
+    fun getFirebaseSoundArroz() {
+        val refSonidoArroz =  refSonidos.child(DbConstants.ARROZ)
 
-        refSonidoClap.addValueEventListener(object : ValueEventListener {
+        refSonidoArroz.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val value = dataSnapshot.value
-                Log.d("Main", "Value sonido 1: $value")
+                Log.d("Main", "Value sonido arroz: $value")
                 if (value == true) {
-                    playSoundClap()
-                    textView.text = DbConstants.CLAP.toUpperCase()
-                    refSonidoClap.setValue(false)
+                    playSoundArroz()
+                    textView.text = DbConstants.ARROZ.toUpperCase()
+                    refSonidoArroz.setValue(false)
                 }
             }
             override fun onCancelled(error: DatabaseError) {
@@ -63,17 +61,17 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    fun getFirebaseSoundCymbal() {
-        val refSonidoCymbal =  refSonidos.child(DbConstants.CYMBAL)
+    fun getFirebaseSoundCrema() {
+        val refSonidoCrema =  refSonidos.child(DbConstants.CREMA)
 
-        refSonidoCymbal.addValueEventListener(object : ValueEventListener {
+        refSonidoCrema.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val value = dataSnapshot.value
                 Log.d("Main", "Value sonido 2: $value")
                 if (value == true) {
-                    playSoundCymbal()
-                    textView.text = DbConstants.CYMBAL.toUpperCase()
-                    refSonidoCymbal.setValue(false)
+                    playSoundCrema()
+                    textView.text = DbConstants.CREMA.toUpperCase()
+                    refSonidoCrema.setValue(false)
                 }
             }
             override fun onCancelled(error: DatabaseError) {
@@ -82,17 +80,17 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    fun getFirebaseSoundKick() {
-        val refSonidoKick =  refSonidos.child(DbConstants.KICK)
+    fun getFirebaseSoundGaseosa() {
+        val refSonidoGaseosa =  refSonidos.child(DbConstants.GASEOSA)
 
-        refSonidoKick.addValueEventListener(object : ValueEventListener {
+        refSonidoGaseosa.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val value = dataSnapshot.value
                 Log.d("Main", "Value sonido 3: $value")
                 if (value == true) {
-                    playSoundKick()
-                    textView.text = DbConstants.KICK.toUpperCase()
-                    refSonidoKick.setValue(false)
+                    playSoundGaseosa()
+                    textView.text = DbConstants.GASEOSA.toUpperCase()
+                    refSonidoGaseosa.setValue(false)
                 }
             }
             override fun onCancelled(error: DatabaseError) {
@@ -101,17 +99,17 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    fun getFirebaseSoundOpen() {
-        val refSonidoOpen =  refSonidos.child(DbConstants.OPEN)
+    fun getFirebaseSoundPapel() {
+        val refSonidoPapel =  refSonidos.child(DbConstants.PAPEL)
 
-        refSonidoOpen.addValueEventListener(object : ValueEventListener {
+        refSonidoPapel.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val value = dataSnapshot.value
                 Log.d("Main", "Value sonido 3: $value")
                 if (value == true) {
-                    playSoundOpen()
-                    textView.text = DbConstants.OPEN.toUpperCase()
-                    refSonidoOpen.setValue(false)
+                    playSoundPapel()
+                    textView.text = DbConstants.PAPEL.toUpperCase()
+                    refSonidoPapel.setValue(false)
                 }
             }
             override fun onCancelled(error: DatabaseError) {
@@ -120,45 +118,40 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    fun getFirebaseSoundSnare() {
-        val refSonidoSnare =  refSonidos.child(DbConstants.SNARE)
-
-        refSonidoSnare.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val value = dataSnapshot.value
-                Log.d("Main", "Value sonido 3: $value")
-                if (value == true) {
-                    playSoundSnare()
-                    textView.text = DbConstants.SNARE.toUpperCase()
-                    refSonidoSnare.setValue(false)
-                }
-            }
-            override fun onCancelled(error: DatabaseError) {
-                Log.w("Main", "Failed to read value sonido 1.", error.toException())
-            }
-        })
-    }
-
-    fun playSoundClap() {
-        mediaPlayer = MediaPlayer.create(this, R.raw.clap)
+    fun playSoundArroz() {
+        if (mediaPlayer.isPlaying()) {
+            mediaPlayer.stop()
+            mediaPlayer.reset()
+        }
+        mediaPlayer = MediaPlayer.create(this, R.raw.arroz)
         mediaPlayer?.start()
     }
 
-    fun playSoundCymbal() {
-        mediaPlayer = MediaPlayer.create(this, R.raw.cymbal)
+    fun playSoundCrema() {
+        if (mediaPlayer.isPlaying()) {
+            mediaPlayer.stop()
+            mediaPlayer.reset()
+        }
+        mediaPlayer = MediaPlayer.create(this, R.raw.crema)
         mediaPlayer?.start()
     }
 
-    fun playSoundKick() {
-        mediaPlayer = MediaPlayer.create(this, R.raw.kick)
+    fun playSoundGaseosa() {
+        if (mediaPlayer.isPlaying()) {
+            mediaPlayer.stop()
+            mediaPlayer.reset()
+        }
+        mediaPlayer = MediaPlayer.create(this, R.raw.gaseosa)
         mediaPlayer?.start()
     }
-    fun playSoundOpen() {
-        mediaPlayer = MediaPlayer.create(this, R.raw.open)
+
+    fun playSoundPapel() {
+        if (mediaPlayer.isPlaying()) {
+            mediaPlayer.stop()
+            mediaPlayer.reset()
+        }
+        mediaPlayer = MediaPlayer.create(this, R.raw.papel)
         mediaPlayer?.start()
     }
-    fun playSoundSnare() {
-        mediaPlayer = MediaPlayer.create(this, R.raw.snare)
-        mediaPlayer?.start()
-    }
+
 }
